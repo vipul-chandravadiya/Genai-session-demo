@@ -1,0 +1,46 @@
+{
+  "scripts": {
+    "dev": "ts-node file.ts",
+    "build": "tsc",
+    "start": "node dist/file.js",
+    "server": "ts-node ./src/server.ts",
+    "server:dev": "nodemon --exec ts-node ./src/server.ts",
+    "server:stop": "fuser -k 3000/tcp || echo 'No server running on port 3000'",
+    "test": "ts-node ./src/test.ts",
+    "process-pdf": "ts-node ./src/embedding.ts",
+    "step1-pdf": "ts-node ./src/executable_each_step/step1-pdf-loader.ts",
+    "step2-chunking": "ts-node ./src/executable_each_step/step2-chunking.ts",
+    "step3-embedding": "ts-node ./src/executable_each_step/step3-embedding.ts",
+    "step4-vectorstore": "ts-node ./src/executable_each_step/step4-vectorstore.ts",
+    "step5-query": "ts-node ./src/executable_each_step/step5-query.ts",
+    "pipeline": "ts-node ./src/executable_each_step/complete-pipeline.ts",
+    "pipeline:help": "npm run pipeline -- --help",
+    "steps:help": "echo '📚 Available step commands:' && echo 'npm run step1-pdf -- <pdf-path>' && echo 'npm run step2-chunking -- <pdf-path> [chunk-size] [overlap]' && echo 'npm run step3-embedding -- <pdf-path> [chunk-size] [overlap] [max-chunks]' && echo 'npm run step4-vectorstore -- <pdf-path> [chunk-size] [overlap] [max-chunks]' && echo 'npm run step5-query -- <your-question>' && echo 'npm run pipeline -- <pdf-path> [chunk-size] [overlap] [query...]'",
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "dev:full": "concurrently \"npm run server:dev\" \"npm run frontend:dev\""
+  },
+  "dependencies": {
+    "@langchain/community": "^0.3.55",
+    "@langchain/core": "^0.3.75",
+    "@langchain/google-genai": "^0.2.17",
+    "@langchain/qdrant": "^0.1.3",
+    "@langchain/textsplitters": "^0.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "langchain": "^0.3.33",
+    "multer": "^2.0.2",
+    "pdf-parse": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.3.1",
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
